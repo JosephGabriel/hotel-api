@@ -1,0 +1,10 @@
+{
+    "presets": [
+        "@babel/preset-env"
+    ],
+    "plugins": [
+        "import-graphql",
+        "@babel/plugin-syntax-object-rest-spread"
+    ]
+}
+  
