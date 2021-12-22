@@ -1,7 +1,77 @@
 type Query {
-  hello: String
+  users: [User!]!
 }
 
 type Mutation {
-  hello: String
+  createUser(data: CreateUserInput!): AuthPayload!
+}
+
+type User {
+  id: ID!
+  name: String!
+  lastname: String!
+  password: String!
+  passwordChangedAt: String
+  username: String!
+  email: String!
+  createdAt: String
+  updatedAt: String
+  verified: Boolean!
+  active: Boolean!
+  role: UserRole!
+}
+
+type Hotel {
+  id: ID!
+  name: String!
+  rating: Int
+  summary: String!
+  description: String!
+  imageCover: String!
+  logo: String!
+  slug: String!
+  location: HotelLocation
+}
+
+type HotelLocation {
+  latitude: String!
+  longitude: String!
+  address: String!
+  description: String!
+  zipCode: String!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  lastname: String!
+  username: String!
+  password: String!
+  passwordConfirm: String!
+}
+
+input CreateUserInput {
+  name: String!
+  lastname: String!
+  password: String!
+  username: String!
+  email: String!
+}
+
+input CreateHotelInput {
+  name: String!
+  summary: String!
+  description: String!
+  imageCover: String!
+  logo: String!
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }

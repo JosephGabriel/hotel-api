@@ -1,0 +1,33 @@
+type User {
+  id: ID! @id
+  name: String!
+  lastname: String!
+  password: String!
+  passwordChangedAt: DateTime
+  username: String! @unique
+  email: String! @unique
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime @updatedAt
+  verified: Boolean! @default(value: false)
+  active: Boolean! @default(value: true)
+  role: UserRole! @default(value: USER)
+}
+
+type Hotel {
+  id: ID! @id
+  name: String!
+  rating: Int
+  summary: String!
+  description: String!
+  imageCover: String!
+  logo: String!
+  slug: String!
+  location: [String!]!
+  address: String!
+  zipCode: String!
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}

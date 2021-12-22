@@ -1,5 +1,6 @@
 export const Query = {
-  hello() {
-    return "Hello";
+  async users(parent, args, { prisma }, info) {
+    const users = await prisma.query.users(args, info);
+    return users;
   },
 };
