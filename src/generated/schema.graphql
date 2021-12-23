@@ -1,11 +1,7 @@
 # source: http://localhost:4466
-# timestamp: Wed Dec 22 2021 02:51:14 GMT-0300 (Horário Padrão de Brasília)
+# timestamp: Thu Dec 23 2021 10:22:05 GMT-0300 (Horário Padrão de Brasília)
 
 type AggregateHotel {
-  count: Int!
-}
-
-type AggregateHotelLocation {
   count: Int!
 }
 
@@ -29,7 +25,10 @@ type Hotel implements Node {
   imageCover: String!
   logo: String!
   slug: String!
-  location: HotelLocation
+  latitude: String!
+  longitude: String!
+  address: String!
+  zipCode: String!
 }
 
 """A connection to a list of items."""
@@ -51,7 +50,10 @@ input HotelCreateInput {
   imageCover: String!
   logo: String!
   slug: String!
-  location: HotelLocationCreateOneInput
+  latitude: String!
+  longitude: String!
+  address: String!
+  zipCode: String!
 }
 
 """An edge in a connection."""
@@ -61,404 +63,6 @@ type HotelEdge {
 
   """A cursor for use in pagination."""
   cursor: String!
-}
-
-type HotelLocation implements Node {
-  id: ID!
-  latitude: String!
-  longitude: String!
-  address: String!
-  description: String!
-  zipCode: String!
-}
-
-"""A connection to a list of items."""
-type HotelLocationConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [HotelLocationEdge]!
-  aggregate: AggregateHotelLocation!
-}
-
-input HotelLocationCreateInput {
-  id: ID
-  latitude: String!
-  longitude: String!
-  address: String!
-  description: String!
-  zipCode: String!
-}
-
-input HotelLocationCreateOneInput {
-  create: HotelLocationCreateInput
-  connect: HotelLocationWhereUniqueInput
-}
-
-"""An edge in a connection."""
-type HotelLocationEdge {
-  """The item at the end of the edge."""
-  node: HotelLocation!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum HotelLocationOrderByInput {
-  id_ASC
-  id_DESC
-  latitude_ASC
-  latitude_DESC
-  longitude_ASC
-  longitude_DESC
-  address_ASC
-  address_DESC
-  description_ASC
-  description_DESC
-  zipCode_ASC
-  zipCode_DESC
-}
-
-type HotelLocationPreviousValues {
-  id: ID!
-  latitude: String!
-  longitude: String!
-  address: String!
-  description: String!
-  zipCode: String!
-}
-
-type HotelLocationSubscriptionPayload {
-  mutation: MutationType!
-  node: HotelLocation
-  updatedFields: [String!]
-  previousValues: HotelLocationPreviousValues
-}
-
-input HotelLocationSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [HotelLocationSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [HotelLocationSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [HotelLocationSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: HotelLocationWhereInput
-}
-
-input HotelLocationUpdateDataInput {
-  latitude: String
-  longitude: String
-  address: String
-  description: String
-  zipCode: String
-}
-
-input HotelLocationUpdateInput {
-  latitude: String
-  longitude: String
-  address: String
-  description: String
-  zipCode: String
-}
-
-input HotelLocationUpdateManyMutationInput {
-  latitude: String
-  longitude: String
-  address: String
-  description: String
-  zipCode: String
-}
-
-input HotelLocationUpdateOneInput {
-  create: HotelLocationCreateInput
-  connect: HotelLocationWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: HotelLocationUpdateDataInput
-  upsert: HotelLocationUpsertNestedInput
-}
-
-input HotelLocationUpsertNestedInput {
-  update: HotelLocationUpdateDataInput!
-  create: HotelLocationCreateInput!
-}
-
-input HotelLocationWhereInput {
-  """Logical AND on all given filters."""
-  AND: [HotelLocationWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [HotelLocationWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [HotelLocationWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  latitude: String
-
-  """All values that are not equal to given value."""
-  latitude_not: String
-
-  """All values that are contained in given list."""
-  latitude_in: [String!]
-
-  """All values that are not contained in given list."""
-  latitude_not_in: [String!]
-
-  """All values less than the given value."""
-  latitude_lt: String
-
-  """All values less than or equal the given value."""
-  latitude_lte: String
-
-  """All values greater than the given value."""
-  latitude_gt: String
-
-  """All values greater than or equal the given value."""
-  latitude_gte: String
-
-  """All values containing the given string."""
-  latitude_contains: String
-
-  """All values not containing the given string."""
-  latitude_not_contains: String
-
-  """All values starting with the given string."""
-  latitude_starts_with: String
-
-  """All values not starting with the given string."""
-  latitude_not_starts_with: String
-
-  """All values ending with the given string."""
-  latitude_ends_with: String
-
-  """All values not ending with the given string."""
-  latitude_not_ends_with: String
-  longitude: String
-
-  """All values that are not equal to given value."""
-  longitude_not: String
-
-  """All values that are contained in given list."""
-  longitude_in: [String!]
-
-  """All values that are not contained in given list."""
-  longitude_not_in: [String!]
-
-  """All values less than the given value."""
-  longitude_lt: String
-
-  """All values less than or equal the given value."""
-  longitude_lte: String
-
-  """All values greater than the given value."""
-  longitude_gt: String
-
-  """All values greater than or equal the given value."""
-  longitude_gte: String
-
-  """All values containing the given string."""
-  longitude_contains: String
-
-  """All values not containing the given string."""
-  longitude_not_contains: String
-
-  """All values starting with the given string."""
-  longitude_starts_with: String
-
-  """All values not starting with the given string."""
-  longitude_not_starts_with: String
-
-  """All values ending with the given string."""
-  longitude_ends_with: String
-
-  """All values not ending with the given string."""
-  longitude_not_ends_with: String
-  address: String
-
-  """All values that are not equal to given value."""
-  address_not: String
-
-  """All values that are contained in given list."""
-  address_in: [String!]
-
-  """All values that are not contained in given list."""
-  address_not_in: [String!]
-
-  """All values less than the given value."""
-  address_lt: String
-
-  """All values less than or equal the given value."""
-  address_lte: String
-
-  """All values greater than the given value."""
-  address_gt: String
-
-  """All values greater than or equal the given value."""
-  address_gte: String
-
-  """All values containing the given string."""
-  address_contains: String
-
-  """All values not containing the given string."""
-  address_not_contains: String
-
-  """All values starting with the given string."""
-  address_starts_with: String
-
-  """All values not starting with the given string."""
-  address_not_starts_with: String
-
-  """All values ending with the given string."""
-  address_ends_with: String
-
-  """All values not ending with the given string."""
-  address_not_ends_with: String
-  description: String
-
-  """All values that are not equal to given value."""
-  description_not: String
-
-  """All values that are contained in given list."""
-  description_in: [String!]
-
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
-
-  """All values less than the given value."""
-  description_lt: String
-
-  """All values less than or equal the given value."""
-  description_lte: String
-
-  """All values greater than the given value."""
-  description_gt: String
-
-  """All values greater than or equal the given value."""
-  description_gte: String
-
-  """All values containing the given string."""
-  description_contains: String
-
-  """All values not containing the given string."""
-  description_not_contains: String
-
-  """All values starting with the given string."""
-  description_starts_with: String
-
-  """All values not starting with the given string."""
-  description_not_starts_with: String
-
-  """All values ending with the given string."""
-  description_ends_with: String
-
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  zipCode: String
-
-  """All values that are not equal to given value."""
-  zipCode_not: String
-
-  """All values that are contained in given list."""
-  zipCode_in: [String!]
-
-  """All values that are not contained in given list."""
-  zipCode_not_in: [String!]
-
-  """All values less than the given value."""
-  zipCode_lt: String
-
-  """All values less than or equal the given value."""
-  zipCode_lte: String
-
-  """All values greater than the given value."""
-  zipCode_gt: String
-
-  """All values greater than or equal the given value."""
-  zipCode_gte: String
-
-  """All values containing the given string."""
-  zipCode_contains: String
-
-  """All values not containing the given string."""
-  zipCode_not_contains: String
-
-  """All values starting with the given string."""
-  zipCode_starts_with: String
-
-  """All values not starting with the given string."""
-  zipCode_not_starts_with: String
-
-  """All values ending with the given string."""
-  zipCode_ends_with: String
-
-  """All values not ending with the given string."""
-  zipCode_not_ends_with: String
-}
-
-input HotelLocationWhereUniqueInput {
-  id: ID
 }
 
 enum HotelOrderByInput {
@@ -478,6 +82,14 @@ enum HotelOrderByInput {
   logo_DESC
   slug_ASC
   slug_DESC
+  latitude_ASC
+  latitude_DESC
+  longitude_ASC
+  longitude_DESC
+  address_ASC
+  address_DESC
+  zipCode_ASC
+  zipCode_DESC
 }
 
 type HotelPreviousValues {
@@ -489,6 +101,10 @@ type HotelPreviousValues {
   imageCover: String!
   logo: String!
   slug: String!
+  latitude: String!
+  longitude: String!
+  address: String!
+  zipCode: String!
 }
 
 type HotelSubscriptionPayload {
@@ -538,7 +154,10 @@ input HotelUpdateInput {
   imageCover: String
   logo: String
   slug: String
-  location: HotelLocationUpdateOneInput
+  latitude: String
+  longitude: String
+  address: String
+  zipCode: String
 }
 
 input HotelUpdateManyMutationInput {
@@ -549,6 +168,10 @@ input HotelUpdateManyMutationInput {
   imageCover: String
   logo: String
   slug: String
+  latitude: String
+  longitude: String
+  address: String
+  zipCode: String
 }
 
 input HotelWhereInput {
@@ -862,7 +485,166 @@ input HotelWhereInput {
 
   """All values not ending with the given string."""
   slug_not_ends_with: String
-  location: HotelLocationWhereInput
+  latitude: String
+
+  """All values that are not equal to given value."""
+  latitude_not: String
+
+  """All values that are contained in given list."""
+  latitude_in: [String!]
+
+  """All values that are not contained in given list."""
+  latitude_not_in: [String!]
+
+  """All values less than the given value."""
+  latitude_lt: String
+
+  """All values less than or equal the given value."""
+  latitude_lte: String
+
+  """All values greater than the given value."""
+  latitude_gt: String
+
+  """All values greater than or equal the given value."""
+  latitude_gte: String
+
+  """All values containing the given string."""
+  latitude_contains: String
+
+  """All values not containing the given string."""
+  latitude_not_contains: String
+
+  """All values starting with the given string."""
+  latitude_starts_with: String
+
+  """All values not starting with the given string."""
+  latitude_not_starts_with: String
+
+  """All values ending with the given string."""
+  latitude_ends_with: String
+
+  """All values not ending with the given string."""
+  latitude_not_ends_with: String
+  longitude: String
+
+  """All values that are not equal to given value."""
+  longitude_not: String
+
+  """All values that are contained in given list."""
+  longitude_in: [String!]
+
+  """All values that are not contained in given list."""
+  longitude_not_in: [String!]
+
+  """All values less than the given value."""
+  longitude_lt: String
+
+  """All values less than or equal the given value."""
+  longitude_lte: String
+
+  """All values greater than the given value."""
+  longitude_gt: String
+
+  """All values greater than or equal the given value."""
+  longitude_gte: String
+
+  """All values containing the given string."""
+  longitude_contains: String
+
+  """All values not containing the given string."""
+  longitude_not_contains: String
+
+  """All values starting with the given string."""
+  longitude_starts_with: String
+
+  """All values not starting with the given string."""
+  longitude_not_starts_with: String
+
+  """All values ending with the given string."""
+  longitude_ends_with: String
+
+  """All values not ending with the given string."""
+  longitude_not_ends_with: String
+  address: String
+
+  """All values that are not equal to given value."""
+  address_not: String
+
+  """All values that are contained in given list."""
+  address_in: [String!]
+
+  """All values that are not contained in given list."""
+  address_not_in: [String!]
+
+  """All values less than the given value."""
+  address_lt: String
+
+  """All values less than or equal the given value."""
+  address_lte: String
+
+  """All values greater than the given value."""
+  address_gt: String
+
+  """All values greater than or equal the given value."""
+  address_gte: String
+
+  """All values containing the given string."""
+  address_contains: String
+
+  """All values not containing the given string."""
+  address_not_contains: String
+
+  """All values starting with the given string."""
+  address_starts_with: String
+
+  """All values not starting with the given string."""
+  address_not_starts_with: String
+
+  """All values ending with the given string."""
+  address_ends_with: String
+
+  """All values not ending with the given string."""
+  address_not_ends_with: String
+  zipCode: String
+
+  """All values that are not equal to given value."""
+  zipCode_not: String
+
+  """All values that are contained in given list."""
+  zipCode_in: [String!]
+
+  """All values that are not contained in given list."""
+  zipCode_not_in: [String!]
+
+  """All values less than the given value."""
+  zipCode_lt: String
+
+  """All values less than or equal the given value."""
+  zipCode_lte: String
+
+  """All values greater than the given value."""
+  zipCode_gt: String
+
+  """All values greater than or equal the given value."""
+  zipCode_gte: String
+
+  """All values containing the given string."""
+  zipCode_contains: String
+
+  """All values not containing the given string."""
+  zipCode_not_contains: String
+
+  """All values starting with the given string."""
+  zipCode_starts_with: String
+
+  """All values not starting with the given string."""
+  zipCode_not_starts_with: String
+
+  """All values ending with the given string."""
+  zipCode_ends_with: String
+
+  """All values not ending with the given string."""
+  zipCode_not_ends_with: String
 }
 
 input HotelWhereUniqueInput {
@@ -881,22 +663,16 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createHotel(data: HotelCreateInput!): Hotel!
-  createHotelLocation(data: HotelLocationCreateInput!): HotelLocation!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateHotel(data: HotelUpdateInput!, where: HotelWhereUniqueInput!): Hotel
-  updateHotelLocation(data: HotelLocationUpdateInput!, where: HotelLocationWhereUniqueInput!): HotelLocation
   deleteUser(where: UserWhereUniqueInput!): User
   deleteHotel(where: HotelWhereUniqueInput!): Hotel
-  deleteHotelLocation(where: HotelLocationWhereUniqueInput!): HotelLocation
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertHotel(where: HotelWhereUniqueInput!, create: HotelCreateInput!, update: HotelUpdateInput!): Hotel!
-  upsertHotelLocation(where: HotelLocationWhereUniqueInput!, create: HotelLocationCreateInput!, update: HotelLocationUpdateInput!): HotelLocation!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyHotels(data: HotelUpdateManyMutationInput!, where: HotelWhereInput): BatchPayload!
-  updateManyHotelLocations(data: HotelLocationUpdateManyMutationInput!, where: HotelLocationWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyHotels(where: HotelWhereInput): BatchPayload!
-  deleteManyHotelLocations(where: HotelLocationWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
@@ -934,13 +710,10 @@ enum PrismaDatabase {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   hotels(where: HotelWhereInput, orderBy: HotelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hotel]!
-  hotelLocations(where: HotelLocationWhereInput, orderBy: HotelLocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [HotelLocation]!
   user(where: UserWhereUniqueInput!): User
   hotel(where: HotelWhereUniqueInput!): Hotel
-  hotelLocation(where: HotelLocationWhereUniqueInput!): HotelLocation
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   hotelsConnection(where: HotelWhereInput, orderBy: HotelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HotelConnection!
-  hotelLocationsConnection(where: HotelLocationWhereInput, orderBy: HotelLocationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HotelLocationConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -952,7 +725,6 @@ type Query {
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   hotel(where: HotelSubscriptionWhereInput): HotelSubscriptionPayload
-  hotelLocation(where: HotelLocationSubscriptionWhereInput): HotelLocationSubscriptionPayload
 }
 
 type User implements Node {

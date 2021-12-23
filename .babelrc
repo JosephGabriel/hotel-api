@@ -2,9 +2,7 @@
     "presets": [
         "@babel/preset-env"
     ],
-    "plugins": [
-        "import-graphql",
+    "plugins": [ 
         "@babel/plugin-syntax-object-rest-spread"
     ]
 }
-  

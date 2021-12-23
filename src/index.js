@@ -1,7 +1,4 @@
-import {
-  ApolloServerPluginLandingPageGraphQLPlayground,
-  ApolloServerPluginLandingPageDisabled,
-} from "apollo-server-core";
+import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import { resolvers } from "./resolvers";
@@ -10,8 +7,10 @@ import fs from "fs";
 
 const typeDefs = fs.readFileSync(`${__dirname}/schema.graphql`).toString();
 
-const context = {
-  prisma,
+const context = ({ req }) => {
+  //req.headers.authorization;
+  const headers = req.headers.authorization;
+  return { prisma, headers };
 };
 
 async function startServer() {
@@ -20,11 +19,7 @@ async function startServer() {
     resolvers,
     context,
     debug: process.env.NODE_ENV === "production" ? true : false,
-    plugins: [
-      process.env.NODE_ENV === "production"
-        ? ApolloServerPluginLandingPageDisabled()
-        : ApolloServerPluginLandingPageGraphQLPlayground(),
-    ],
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
   });
 
   await server.start();

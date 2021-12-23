@@ -1,14 +1,15 @@
-import { ApolloError } from "apollo-server-errors";
+import { ApolloError, UserInputError } from "apollo-server-errors";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 export const Mutation = {
+  //Cria um usúario
   async createUser(parent, { data }, { prisma }, info) {
     //Validação
     const userExists = await prisma.exists.User({ email: data.email });
 
     if (userExists) {
-      throw new ApolloError("Este email já esta em uso", 401);
+      throw new UserInputError("Este email já esta em uso");
     }
 
     const userNameExists = await prisma.exists.User({
@@ -16,17 +17,16 @@ export const Mutation = {
     });
 
     if (userNameExists) {
-      throw new ApolloError("Este nome de usúario já esta em uso", 401);
+      throw new UserInputError("Este nome de usúario já esta em uso");
     }
 
     if (data.password !== data.passwordConfirm) {
-      throw new ApolloError("As senhas não coincidem", 401);
+      throw new UserInputError("As senhas não coincidem");
     }
 
     if (data.password.length < 8 || data.passwordConfirm.length < 8) {
-      throw new ApolloError(
-        "As senhas deve ser maior ou igual a 8 caracteres",
-        401
+      throw new UserInputError(
+        "As senhas deve ser maior ou igual a 8 caracteres"
       );
     }
 
@@ -46,5 +46,9 @@ export const Mutation = {
       user,
       token,
     };
+  },
+
+  async createHotel(parent, { data }, { prisma, headers }, info) {
+    const hotel = await prisma.mutation.createHotel();
   },
 };

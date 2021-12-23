@@ -22,7 +22,8 @@ type Hotel {
   imageCover: String!
   logo: String!
   slug: String!
-  location: [String!]!
+  latitude: String!
+  longitude: String!
   address: String!
   zipCode: String!
 }
