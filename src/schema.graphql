@@ -1,6 +1,9 @@
 type Query {
   user(id: ID!): User!
   users: [User!]!
+
+  hotel(id: ID!): Hotel
+  hotels: [Hotel!]!
 }
 
 type Mutation {
