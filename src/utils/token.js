@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { AuthenticationError } from "apollo-server-errors";
 
 export const signInToken = async (payload) => {
   const token = await jwt.sign({ id: payload }, "secret", {
@@ -9,7 +10,15 @@ export const signInToken = async (payload) => {
 };
 
 export const verifyToken = async (header) => {
-  const token = header.replace("Bearer ", "");
-  const decoded = await jwt.verify(token, "secret");
-  return decoded;
+  try {
+    const token = header.replace("Bearer ", "");
+
+    const decoded = await jwt.verify(token, "secret");
+
+    console.log(decoded);
+
+    return decoded;
+  } catch (error) {
+    throw new AuthenticationError("Token inválido");
+  }
 };

@@ -4,8 +4,11 @@ type Query {
 }
 
 type Mutation {
+  loginUser(data: LoginUserInput!): AuthPayload!
   createUser(data: CreateUserInput!): AuthPayload!
   updateUser(data: UpdateUserInput!): AuthPayload!
+  updatedUserPassword(data: UpdateUserPasswordInput!): AuthPayload!
+  deleteUser: User!
 
   createHotel(data: CreateHotelInput!): Hotel!
 }
@@ -43,6 +46,11 @@ type Hotel {
 type AuthPayload {
   token: String!
   user: User!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
 }
 
 input CreateUserInput {
