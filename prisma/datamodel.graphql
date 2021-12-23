@@ -22,10 +22,10 @@ type Hotel {
   imageCover: String!
   logo: String!
   slug: String!
-  latitude: String!
-  longitude: String!
-  address: String!
-  zipCode: String!
+  latitude: String
+  longitude: String
+  address: String
+  zipCode: String
 }
 
 enum UserRole {

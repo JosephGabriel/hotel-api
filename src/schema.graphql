@@ -34,15 +34,10 @@ type Hotel {
   imageCover: String!
   logo: String!
   slug: String!
-  location: HotelLocation
-}
-
-type HotelLocation {
-  latitude: String!
-  longitude: String!
-  address: String!
-  description: String!
-  zipCode: String!
+  latitude: String
+  longitude: String
+  address: String
+  zipCode: String
 }
 
 type AuthPayload {
@@ -77,6 +72,10 @@ input CreateHotelInput {
   description: String!
   imageCover: String!
   logo: String!
+  latitude: String
+  longitude: String
+  address: String
+  zipCode: String
 }
 
 enum UserRole {

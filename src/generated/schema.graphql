@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Dec 23 2021 10:22:05 GMT-0300 (Horário Padrão de Brasília)
+# timestamp: Thu Dec 23 2021 11:27:33 GMT-0300 (Horário Padrão de Brasília)
 
 type AggregateHotel {
   count: Int!
@@ -25,10 +25,10 @@ type Hotel implements Node {
   imageCover: String!
   logo: String!
   slug: String!
-  latitude: String!
-  longitude: String!
-  address: String!
-  zipCode: String!
+  latitude: String
+  longitude: String
+  address: String
+  zipCode: String
 }
 
 """A connection to a list of items."""
@@ -50,10 +50,10 @@ input HotelCreateInput {
   imageCover: String!
   logo: String!
   slug: String!
-  latitude: String!
-  longitude: String!
-  address: String!
-  zipCode: String!
+  latitude: String
+  longitude: String
+  address: String
+  zipCode: String
 }
 
 """An edge in a connection."""
@@ -101,10 +101,10 @@ type HotelPreviousValues {
   imageCover: String!
   logo: String!
   slug: String!
-  latitude: String!
-  longitude: String!
-  address: String!
-  zipCode: String!
+  latitude: String
+  longitude: String
+  address: String
+  zipCode: String
 }
 
 type HotelSubscriptionPayload {
