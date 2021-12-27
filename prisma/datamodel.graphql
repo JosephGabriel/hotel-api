@@ -11,6 +11,7 @@ type User {
   verified: Boolean! @default(value: false)
   active: Boolean! @default(value: true)
   role: UserRole! @default(value: USER)
+  reviews: [Review!]! @relation(name: "UserToReviews", onDelete: CASCADE)
 }
 
 type Hotel {
@@ -26,6 +27,33 @@ type Hotel {
   longitude: String
   address: String
   zipCode: String
+  rooms: [Room!]! @relation(name: "HotelToRooms", onDelete: CASCADE)
+}
+
+type Room {
+  id: ID! @id
+  name: String! @unique
+  description: String!
+  summary: String!
+  imageCover: String!
+  imageHero: String!
+  photos: [String!]! @scalarList(strategy: RELATION)
+  commodities: [String!]! @scalarList(strategy: RELATION)
+  mainCommodities: [String!]! @scalarList(strategy: RELATION)
+  forFamilycommodities: [String!]! @scalarList(strategy: RELATION)
+  activityCommodities: [String!]! @scalarList(strategy: RELATION)
+  price: Float!
+  rating: Int
+  hotel: Hotel! @relation(name: "HotelToRooms", onDelete: SET_NULL)
+  reviews: [Review!]! @relation(name: "RoomToReviews", onDelete: CASCADE)
+}
+
+type Review {
+  id: ID! @id
+  user: User! @relation(name: "UserToReviews", onDelete: SET_NULL)
+  room: Room! @relation(name: "RoomToReviews", onDelete: SET_NULL)
+  review: String!
+  rating: Int!
 }
 
 enum UserRole {

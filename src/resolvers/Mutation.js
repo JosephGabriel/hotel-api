@@ -129,19 +129,17 @@ export const Mutation = {
 
   //Cria um hotel
   async createHotel(parent, { data }, { prisma, headers }, info) {
-    const token = headers.replace("Bearer ", "");
+    const token = await verifyToken(headers);
 
-    const admin = await prisma.query.user({ where: { id: token } });
+    const admin = await prisma.query.user({ where: { id: token.id } });
 
     if (!admin || !admin.verified || !admin.active) {
       throw new AuthenticationError("Este administrador não é válido");
     }
 
-    console.log(data);
-
     data.slug = slugify(data.name.trim(), { lower: true });
 
-    const hotel = await prisma.mutation.createHotel({ data });
+    const hotel = await prisma.mutation.createHotel({ data }, info);
 
     return hotel;
   },

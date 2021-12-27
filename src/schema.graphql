@@ -29,6 +29,7 @@ type User {
   verified: Boolean!
   active: Boolean!
   role: UserRole!
+  reviews: [Review!]!
 }
 
 type Hotel {
@@ -44,6 +45,33 @@ type Hotel {
   longitude: String
   address: String
   zipCode: String
+  rooms: [Room!]!
+}
+
+type Room {
+  id: ID!
+  name: String!
+  description: String!
+  summary: String!
+  imageCover: String!
+  imageHero: String!
+  photos: [String!]!
+  commodities: [String!]!
+  mainCommodities: [String!]!
+  forFamilycommodities: [String!]!
+  activityCommodities: [String!]!
+  price: Float!
+  rating: Int
+  hotel: Hotel!
+  reviews: [Review!]!
+}
+
+type Review {
+  id: ID!
+  user: User!
+  room: Room!
+  review: String!
+  rating: Int!
 }
 
 type AuthPayload {
